@@ -1,0 +1,109 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+:root {
+  --primary: #1159a8;
+  --primary-hover: hover;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Header */
+header {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 0.5rem 2rem;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  text-align: center;
+}
+
+/* Mute Icon */
+header i {
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+/* Top */
+.top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  height: 100%;
+}
+
+.top-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.top-left textarea {
+  width: 100%;
+  height: 79%;
+  border-radius: 0;
+  resize: none;
+  outline: 0;
+  border-top: 0;
+  padding: 1rem;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.top-left .plate-details {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.top-left .plate-details img {
+  height: 100%;
+  max-height: 100px;
+  width: auto;
+}
+
+.top-left .plate-details .plate-number {
+  flex: 1;
+  background-color: #ccc;
+  font-size: 3.5rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-right {
+  justify-self: end;
+}
+
+.top-right video {
+  width: 640px;
+  height: 480px;
+}
+
+iframe {
+  border: none;
+  width: 640px;
+  height: 480px;
+}
