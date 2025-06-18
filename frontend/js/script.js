@@ -40,6 +40,7 @@ muteButton.addEventListener("click", () => {
 function runTag(event) {
   playSound("../audio/CHIMES.WAV");
   alprData = JSON.parse(event.data);
+  console.log(alprData);
 
   // Optional: display on page
   // document.getElementById("output").textContent = JSON.stringify(
