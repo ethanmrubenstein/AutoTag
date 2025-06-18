@@ -108,7 +108,7 @@ function runTag(event) {
 // Webhook
 let alprData = null;
 
-const source = new EventSource("http://autotag-5icr.onrender.com/events");
+const source = new EventSource("https://autotag-5icr.onrender.com/events");
 
 source.onmessage = (event) => {
   runTag(event);
