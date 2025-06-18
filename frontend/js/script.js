@@ -41,69 +41,73 @@ function runTag(event) {
   playSound("../audio/CHIMES.WAV");
   alprData = JSON.parse(event.data);
   console.log(alprData);
+  if (alprData.status === "ok") {
+    // Optional: display on page
+    // document.getElementById("output").textContent = JSON.stringify(
+    //   alprData,
+    //   null,
+    //   2
+    // );
 
-  // Optional: display on page
-  // document.getElementById("output").textContent = JSON.stringify(
-  //   alprData,
-  //   null,
-  //   2
-  // );
+    // Set Tag Text
+    document.getElementById("plateNumber").textContent =
+      alprData?.plate.toUpperCase();
 
-  // Set Tag Text
-  document.getElementById("plateNumber").textContent =
-    alprData?.plate.toUpperCase();
+    // Set Tag Image
+    const base64String = alprData?.plate_crop;
+    document.getElementById(
+      "plateImage"
+    ).src = `data:image/jpeg;base64,${base64String}`;
 
-  // Set Tag Image
-  const base64String = alprData?.plate_crop;
-  document.getElementById(
-    "plateImage"
-  ).src = `data:image/jpeg;base64,${base64String}`;
-
-  // Textarea Variables
-  let style;
-  if (alprData.content.vin_data.VehicleType === "PASSENGER CAR") {
-    if (alprData.content.vin_data.Doors) {
-      style = alprData.content.vin_data.Doors + "D";
+    // Textarea Variables
+    let style;
+    if (alprData.content.vin_data.VehicleType === "PASSENGER CAR") {
+      if (alprData.content.vin_data.Doors) {
+        style = alprData.content.vin_data.Doors + "D";
+      } else {
+        style = "UNK";
+      }
     } else {
-      style = "UNK";
+      style = alprData.content.vin_data.VehicleType;
     }
-  } else {
-    style = alprData.content.vin_data.VehicleType;
-  }
 
-  let trim;
+    let trim;
 
-  const trim1 = alprData.content.vin_data.Trim?.trim();
-  const trim2 = alprData.content.vin_data.Trim2?.trim();
+    const trim1 = alprData.content.vin_data.Trim?.trim();
+    const trim2 = alprData.content.vin_data.Trim2?.trim();
 
-  if (trim1 && trim2) {
-    trim = `${trim1} - ${trim2}`;
-  } else if (trim1) {
-    trim = trim1;
-  } else if (trim2) {
-    trim = trim2;
-  } else {
-    trim = "UNK";
-  }
+    if (trim1 && trim2) {
+      trim = `${trim1} - ${trim2}`;
+    } else if (trim1) {
+      trim = trim1;
+    } else if (trim2) {
+      trim = trim2;
+    } else {
+      trim = "UNK";
+    }
 
-  // Set Textarea
-  tagResponse.innerHTML = `--DMVR--
+    // Set Textarea
+    tagResponse.innerHTML = `--DMVR--
   DHSMV RECORD -
   ${alprData.content.plate}    ${alprData.content.vin} ${
-    alprData.content.make
-  } ${alprData.content.model}    ${style}    ${alprData.content.year}
+      alprData.content.make
+    } ${alprData.content.model}    ${style}    ${alprData.content.year}
 
   TRM: ${trim}    BDY: ${alprData.content.vin_data.BodyClass}    ENG: ${
-    alprData.content.vin_data.EngineManufacturer
-  } ${alprData.content.vin_data.DisplacementL}L ${
-    alprData.content.vin_data.EngineConfiguration === "V-Shaped"
-      ? "V"
-      : alprData.content.vin_data.EngineConfiguration + " "
-  }${alprData.content.vin_data.EngineCylinders} ${
-    alprData.content.vin_data.EngineModel
-  }
+      alprData.content.vin_data.EngineManufacturer
+    } ${alprData.content.vin_data.DisplacementL}L ${
+      alprData.content.vin_data.EngineConfiguration === "V-Shaped"
+        ? "V"
+        : alprData.content.vin_data.EngineConfiguration + " "
+    }${alprData.content.vin_data.EngineCylinders} ${
+      alprData.content.vin_data.EngineModel
+    }
   MFR: ${alprData.content.vin_data.Manufacturer}
   `;
+  } else if (alprData.status === "error") {
+    playSound("../audio/ALERTSHORT.WAV");
+    tagResponse.innerHTML = `ERROR`;
+  }
 }
 
 // Webhook
