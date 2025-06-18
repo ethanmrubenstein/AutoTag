@@ -41,24 +41,24 @@ function runTag(event) {
   playSound("../audio/CHIMES.WAV");
   alprData = JSON.parse(event.data);
   console.log(alprData);
+  // Optional: display on page
+  // document.getElementById("output").textContent = JSON.stringify(
+  //   alprData,
+  //   null,
+  //   2
+  // );
+
+  // Set Tag Text
+  document.getElementById("plateNumber").textContent =
+    alprData?.plate.toUpperCase();
+
+  // Set Tag Image
+  const base64String = alprData?.plate_crop;
+  document.getElementById(
+    "plateImage"
+  ).src = `data:image/jpeg;base64,${base64String}`;
+
   if (alprData.status === "ok") {
-    // Optional: display on page
-    // document.getElementById("output").textContent = JSON.stringify(
-    //   alprData,
-    //   null,
-    //   2
-    // );
-
-    // Set Tag Text
-    document.getElementById("plateNumber").textContent =
-      alprData?.plate.toUpperCase();
-
-    // Set Tag Image
-    const base64String = alprData?.plate_crop;
-    document.getElementById(
-      "plateImage"
-    ).src = `data:image/jpeg;base64,${base64String}`;
-
     // Textarea Variables
     let style;
     if (alprData.content.vin_data.VehicleType === "PASSENGER CAR") {
